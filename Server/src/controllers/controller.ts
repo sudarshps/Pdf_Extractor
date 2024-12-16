@@ -8,7 +8,7 @@ export const uploadPdf = async (req: Request, res: Response): Promise<void> => {
       res.status(400).send("no file uploaded!");
       return;
     }
-    const filePath = `${req.protocol}://${req.get("host")}/uploads/${
+    const filePath = `${process.env.BACKEND}/uploads/${
       req.file.filename
     }`;
     res.json({ filePath });
