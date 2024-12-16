@@ -32,7 +32,7 @@ const App: React.FC = () => {
 
     try {
       axios
-        .post("http://localhost:3000/uploadpdf", formData, {
+        .post(`${import.meta.env.VITE_BACKEND}/uploadpdf`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         })
         .then((res) => {

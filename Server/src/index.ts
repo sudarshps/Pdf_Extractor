@@ -2,13 +2,15 @@ import express from "express";
 import cors from 'cors'
 import routes from './routes/routes'
 import path from "path";
+import dotenv from 'dotenv'
+dotenv.config({ path: path.resolve(__dirname, '..', '.env') });
 
 
 const app = express()
 app.use(express.json())
 
 app.use(cors({
-    origin:['http://localhost:5173'],
+    origin:[process.env.FRONTEND || ''],
     methods:['GET','POST']
 }))
 

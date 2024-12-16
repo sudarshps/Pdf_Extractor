@@ -16,7 +16,7 @@ const PdfPage:React.FC<PdfPageProps> = ({ pdfPath }) => {
   const [generatedPdfLink,setGeneratedPdfLink] = useState<string|null>(null)
   const [totalPdfPage,setTotalPdfPage] = useState(0)
   const generatePdf = (selectedPages:string) => {
-    axios.post('http://localhost:3000/generatepdf',{selectedPages,pdfPath})
+    axios.post(`${import.meta.env.VITE_BACKEND}/generatepdf`,{selectedPages,pdfPath})
     .then((res)=>{
       if(res.data){
         setGeneratedPdfLink(res.data.generatedDownloadLink)
