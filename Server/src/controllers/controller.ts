@@ -54,9 +54,7 @@ export const generatePdf = async (
     const extractedFilePath = `./uploads/${extractedFileName}`;
     fs.writeFileSync(extractedFilePath, pdfBytes);
 
-    const generatedDownloadLink = `${req.protocol}://${req.get(
-      "host"
-    )}/uploads/${extractedFileName}`;
+    const generatedDownloadLink = `${process.env.BACKEND}/uploads/${extractedFileName}`;
     res.status(200).json({ generatedDownloadLink });
     setTimeout(() => {
       fs.unlinkSync(extractedFilePath);   
