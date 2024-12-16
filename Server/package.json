@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon ./src/index.ts",
-    "build":"node --max-old-space-size=8192 ./node_modules/typescript/bin/tsc --build"
+    "build":"tsc"
   },
   "author": "",
   "license": "ISC",
