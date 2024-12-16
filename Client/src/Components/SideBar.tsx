@@ -80,7 +80,7 @@ const SideBar: React.FC<SideBarProps> = ({
         className="
           bg-red-500 
           text-white 
-          p-2 
+          p-4
           rounded-full 
           fixed 
           bottom-4 
@@ -91,7 +91,7 @@ const SideBar: React.FC<SideBarProps> = ({
           transition-colors
         "
       >
-        <RiFileSettingsLine />
+        <RiFileSettingsLine className="text-3xl"/>
       </button>
     </div>
 

@@ -131,7 +131,7 @@ const PdfPage:React.FC<PdfPageProps> = ({ pdfPath }) => {
               w-1/3 
               bg-red-500 
               text-white 
-              py-2
+              py-4
               rounded-lg 
               flex 
               items-center 
@@ -141,7 +141,7 @@ const PdfPage:React.FC<PdfPageProps> = ({ pdfPath }) => {
               transition-colors
             "
           >
-           <GrView/>
+           <GrView className="text-xl"/>
             Preview
           </button>
         </div>
