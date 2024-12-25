@@ -29,7 +29,6 @@ const App: React.FC = () => {
 
     const formData = new FormData();
     formData.append("file", pdfFile);
-
     try {
       axios
         .post(`${import.meta.env.VITE_BACKEND}/uploadpdf`, formData, {
@@ -71,11 +70,11 @@ const App: React.FC = () => {
             </button>
           </div>
         </div>
-      ) : (
-        <div className="flex flex-col">
-          <PdfPage pdfPath={serverPdfFile} />
-        </div>
-      )}
+      ) :
+      (<div className="flex flex-col">
+        <PdfPage pdfPath={serverPdfFile} />
+      </div>)
+      }
     </>
   );
 };

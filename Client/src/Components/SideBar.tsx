@@ -22,7 +22,7 @@ const SideBar: React.FC<SideBarProps> = ({
   const [isFullScreenOpen, setIsFullScreenOpen] = useState(false);
 
   const handleGeneratePDF = (pageValue: string) => {
-    onGeneratePDF(pageValue);
+    onGeneratePDF(pageValue)
   };
 
   const handleDownload = () => {
@@ -73,7 +73,6 @@ const SideBar: React.FC<SideBarProps> = ({
 
   return (
     <>
-    {/* Mobile Hamburger Button */}
     <div className="sm:hidden">
       <button 
         onClick={() => setIsFullScreenOpen(true)}
@@ -95,7 +94,6 @@ const SideBar: React.FC<SideBarProps> = ({
       </button>
     </div>
 
-    {/* Full-Screen Overlay */}
     {isFullScreenOpen && (
       <div 
         className="
@@ -108,7 +106,6 @@ const SideBar: React.FC<SideBarProps> = ({
           sm:hidden
         "
       >
-        {/* Close Button */}
         <div className="flex justify-end p-4">
           <button 
             onClick={() => setIsFullScreenOpen(false)}
@@ -121,7 +118,6 @@ const SideBar: React.FC<SideBarProps> = ({
           </button>
         </div>
 
-        {/* Full-Screen Content */}
         <div className="px-6 pb-6">
           <h3 className="text-center text-gray-800 text-xl font-semibold mb-6">
             PDF Options
@@ -197,7 +193,6 @@ const SideBar: React.FC<SideBarProps> = ({
       </div>
     )}
 
-    {/* Desktop Sidebar (Unchanged) */}
     <div className="hidden sm:block w-full max-w-sm bg-gray-100 p-6 shadow-md">
       <h3 className="text-center text-gray-800 text-lg sm:text-xl font-semibold mb-4">
         Choose Pages
