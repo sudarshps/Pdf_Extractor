@@ -15,7 +15,7 @@ export const uploadPdf = async (req: Request, res: Response): Promise<void> => {
   } catch (error) {
     console.error("error while uploading pdf");
   }
-};
+}
 
 export const generatePdf = async (
   req: Request,

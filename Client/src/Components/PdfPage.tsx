@@ -151,7 +151,7 @@ const PdfPage: React.FC<PdfPageProps> = ({ pdfPath }) => {
               ))}
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center min-h-screen h-full p-10">
+            <div className="flex flex-col items-center justify-center min-h-screen h-full p-10 ">
               <Loader />
               <h1 className="text-lg text-white mt-5">Loading Pages...</h1>
             </div>
