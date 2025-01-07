@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa";
 import axios from "axios";
 import Loader from "./Loader";
+import placeholderImage from '../assets/233-2332677_image-500580-placeholder-transparent.png'
 
 interface PdfPageProps {
   pdfPath: string;
@@ -57,6 +58,9 @@ const PdfPage: React.FC<PdfPageProps> = ({ pdfPath }) => {
   const handleImageSelection = (image: string, index: number) => {
     setSelectedImage((prev) =>{
         if(prev?.includes(image)){
+          if(selectedPreviewImage>0){
+            setSelectedPreviewImage(prev=>prev-1)
+          }
           return prev.filter((img) => img !== image) 
         }else{
           return [...(prev || []), image] 
@@ -113,7 +117,6 @@ const PdfPage: React.FC<PdfPageProps> = ({ pdfPath }) => {
 
     loadPdf();
   }, [pdfPath]);
-
   return (
     <>
       <div className="flex flex-col sm:flex-row h-screen">
@@ -196,9 +199,9 @@ const PdfPage: React.FC<PdfPageProps> = ({ pdfPath }) => {
                 )}
 
                 <img
-                  src={selectedImage[selectedPreviewImage]}
+                  src={selectedImage.length?selectedImage[selectedPreviewImage]:placeholderImage}
                   alt="image"
-                  className="max-h-[60vh] w-auto"
+                  className={!selectedImage.length?"w-64 mt-40":"max-h-[60vh] w-auto"}
                 />
 
                 {selectedImage.length > 1 &&
@@ -255,9 +258,9 @@ const PdfPage: React.FC<PdfPageProps> = ({ pdfPath }) => {
       )}
 
       <img
-        src={selectedImage[selectedPreviewImage]}
+        src={selectedImage.length?selectedImage[selectedPreviewImage]:placeholderImage}
         alt="Full Preview"
-        className="max-w-full max-h-[80vh] object-contain"
+        className={!selectedImage.length?"w-32":"max-w-full max-h-[80vh] object-contain"}
       />
 
       {selectedImage.length > 1 &&
