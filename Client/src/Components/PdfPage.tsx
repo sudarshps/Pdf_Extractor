@@ -10,7 +10,7 @@ import {
 } from "react-icons/fa";
 import axios from "axios";
 import Loader from "./Loader";
-import placeholderImage from '../assets/233-2332677_image-500580-placeholder-transparent.png'
+import placeholderImage from "../assets/233-2332677_image-500580-placeholder-transparent.png";
 
 interface PdfPageProps {
   pdfPath: string;
@@ -18,7 +18,7 @@ interface PdfPageProps {
 
 const PdfPage: React.FC<PdfPageProps> = ({ pdfPath }) => {
   const [images, setImages] = useState<string[]>([]);
-  const [selectedImage, setSelectedImage] = useState<string[] | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string[]>([]);
   const [generatedPdfLink, setGeneratedPdfLink] = useState<string | null>(null);
   const [selectedPreviewImage, setSelectedPreviewImage] = useState<number>(0);
   const [totalPdfPage, setTotalPdfPage] = useState(0);
@@ -38,36 +38,39 @@ const PdfPage: React.FC<PdfPageProps> = ({ pdfPath }) => {
   const inputChange = (input: string) => {
     const numArr = input.split(",");
     setSelectedPages([]);
+    const newSelectedImages: string[] = [];
     for (const str of numArr) {
       if (str.includes("-")) {
         const arr = str.split("-");
         for (let i = Number(arr[0]); i <= Number(arr[1]); i++) {
           setSelectedPages((prevSelectedPages) => [...prevSelectedPages, i]);
+          newSelectedImages.push(images[i-1]);
         }
       } else {
         setSelectedPages((prevSelectedPages) => [
           ...prevSelectedPages,
           Number(str),
         ]);
+        newSelectedImages.push(images[Number(str)-1]);
       }
     }
+    setSelectedImage(newSelectedImages);
   };
 
   const [selectedPages, setSelectedPages] = useState<number[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleImageSelection = (image: string, index: number) => {
-    setSelectedImage((prev) =>{
-        if(prev?.includes(image)){
-          if(selectedPreviewImage>0){
-            setSelectedPreviewImage(prev=>prev-1)
-          }
-          return prev.filter((img) => img !== image) 
-        }else{
-          return [...(prev || []), image] 
+    setSelectedImage((prev) => {
+      if (prev?.includes(image)) {
+        if (selectedPreviewImage > 0) {
+          setSelectedPreviewImage((prev) => prev - 1);
         }
+        return prev.filter((img) => img !== image);
+      } else {
+        return [...(prev || []), image];
       }
-    );
-    
+    });
+
     setSelectedPages((prev) =>
       prev.includes(index + 1)
         ? prev.filter((num) => num !== index + 1)
@@ -190,37 +193,53 @@ const PdfPage: React.FC<PdfPageProps> = ({ pdfPath }) => {
             <h1 className="text-xl md:text-2xl font-semibold mt-4">Preview</h1>
             {selectedImage && (
               <div className="flex items-center space-x-5 justify-center mt-4 p-4">
-                {selectedPreviewImage > 0 && (
-                  <FaChevronCircleLeft
-                    className="hover:cursor-pointer"
-                    size={30}
-                    onClick={() => setSelectedPreviewImage((prev) => prev - 1)}
-                  />
-                )}
-
-                <img
-                  src={selectedImage.length?selectedImage[selectedPreviewImage]:placeholderImage}
-                  alt="image"
-                  className={!selectedImage.length?"w-64 mt-40":"max-h-[60vh] w-auto"}
-                />
-
-                {selectedImage.length > 1 &&
-                  selectedPreviewImage + 1 < selectedImage.length && (
-                    <FaChevronCircleRight
+                <div className="w-8 flex justify-center">
+                  {selectedPreviewImage > 0 && (
+                    <FaChevronCircleLeft
                       className="hover:cursor-pointer"
                       size={30}
                       onClick={() =>
-                        setSelectedPreviewImage((prev) => prev + 1)
+                        setSelectedPreviewImage((prev) => prev - 1)
                       }
                     />
                   )}
+                </div>
+
+                <div className="flex justify-center items-center">
+                  <img
+                    src={
+                      selectedImage.length
+                        ? selectedImage[selectedPreviewImage]
+                        : placeholderImage
+                    }
+                    alt="image"
+                    className={
+                      !selectedImage.length
+                        ? "w-64 mt-40"
+                        : "max-h-[60vh] w-auto"
+                    }
+                  />
+                </div>
+
+                <div className="w-8 flex justify-center">
+                  {selectedImage.length > 1 &&
+                    selectedPreviewImage + 1 < selectedImage.length && (
+                      <FaChevronCircleRight
+                        className="hover:cursor-pointer"
+                        size={30}
+                        onClick={() =>
+                          setSelectedPreviewImage((prev) => prev + 1)
+                        }
+                      />
+                    )}
+                </div>
               </div>
             )}
           </div>
 
           {isModalOpen && selectedImage && (
-  <div
-    className="
+            <div
+              className="
       fixed 
       inset-0 
       z-[100] 
@@ -232,10 +251,10 @@ const PdfPage: React.FC<PdfPageProps> = ({ pdfPath }) => {
       p-4 
       sm:hidden
     "
-  >
-    <button
-      onClick={() => setIsModalOpen(false)}
-      className="
+            >
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="
         absolute 
         top-4 
         right-4 
@@ -244,37 +263,46 @@ const PdfPage: React.FC<PdfPageProps> = ({ pdfPath }) => {
         transition-colors 
         z-[110]
       "
-    >
-      <FaWindowClose className="text-red-500" size={30} />
-    </button>
+              >
+                <FaWindowClose className="text-red-500" size={30} />
+              </button>
 
-    <div className="relative w-full max-w-md flex items-center justify-center">
-      {selectedPreviewImage > 0 && (
-        <FaChevronCircleLeft
-          className="absolute left-4 hover:cursor-pointer z-[110]"
-          size={30}
-          onClick={() => setSelectedPreviewImage((prev) => prev - 1)}
-        />
-      )}
+              <div className="relative w-full max-w-md flex items-center justify-center">
+                {selectedPreviewImage > 0 && (
+                  <FaChevronCircleLeft
+                    className="absolute left-4 hover:cursor-pointer z-[110]"
+                    size={30}
+                    onClick={() => setSelectedPreviewImage((prev) => prev - 1)}
+                  />
+                )}
 
-      <img
-        src={selectedImage.length?selectedImage[selectedPreviewImage]:placeholderImage}
-        alt="Full Preview"
-        className={!selectedImage.length?"w-32":"max-w-full max-h-[80vh] object-contain"}
-      />
+                <img
+                  src={
+                    selectedImage.length
+                      ? selectedImage[selectedPreviewImage]
+                      : placeholderImage
+                  }
+                  alt="Full Preview"
+                  className={
+                    !selectedImage.length
+                      ? "w-32"
+                      : "max-w-full max-h-[80vh] object-contain"
+                  }
+                />
 
-      {selectedImage.length > 1 &&
-        selectedPreviewImage + 1 < selectedImage.length && (
-          <FaChevronCircleRight
-            className="absolute right-4 hover:cursor-pointer z-[110]"
-            size={30}
-            onClick={() => setSelectedPreviewImage((prev) => prev + 1)}
-          />
-        )}
-    </div>
-  </div>
-)}
-
+                {selectedImage.length > 1 &&
+                  selectedPreviewImage + 1 < selectedImage.length && (
+                    <FaChevronCircleRight
+                      className="absolute right-4 hover:cursor-pointer z-[110]"
+                      size={30}
+                      onClick={() =>
+                        setSelectedPreviewImage((prev) => prev + 1)
+                      }
+                    />
+                  )}
+              </div>
+            </div>
+          )}
         </>
         <SideBar
           onGeneratePDF={generatePdf}
