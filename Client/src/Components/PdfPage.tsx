@@ -28,8 +28,8 @@ const PdfPage: React.FC<PdfPageProps> = ({ pdfPath }) => {
         selectedPages,
         pdfPath,
       })
-      .then((res) => {
-        if (res.data) {
+      .then((res) => {   
+        if (res.data) { 
           setGeneratedPdfLink(res.data.generatedDownloadLink);
         }
       });
@@ -270,7 +270,7 @@ const PdfPage: React.FC<PdfPageProps> = ({ pdfPath }) => {
               <div className="relative w-full max-w-md flex items-center justify-center">
                 {selectedPreviewImage > 0 && (
                   <FaChevronCircleLeft
-                    className="absolute left-4 hover:cursor-pointer z-[110]"
+                    className="absolute left-4 hover:cursor-pointer z-[110] text-black"
                     size={30}
                     onClick={() => setSelectedPreviewImage((prev) => prev - 1)}
                   />
@@ -293,7 +293,7 @@ const PdfPage: React.FC<PdfPageProps> = ({ pdfPath }) => {
                 {selectedImage.length > 1 &&
                   selectedPreviewImage + 1 < selectedImage.length && (
                     <FaChevronCircleRight
-                      className="absolute right-4 hover:cursor-pointer z-[110]"
+                      className="absolute right-4 hover:cursor-pointer z-[110] text-black"
                       size={30}
                       onClick={() =>
                         setSelectedPreviewImage((prev) => prev + 1)
