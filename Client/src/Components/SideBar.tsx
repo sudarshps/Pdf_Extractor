@@ -10,6 +10,7 @@ interface SideBarProps {
   downloadLink: string | null;
   onInputChange: (input: string) => void;
   totalPages: number;
+  isImagesLoaded: boolean;
 }
 
 const SideBar: React.FC<SideBarProps> = ({
@@ -17,7 +18,8 @@ const SideBar: React.FC<SideBarProps> = ({
   onGeneratePDF,
   downloadLink,
   onInputChange,
-  totalPages
+  totalPages,
+  isImagesLoaded
 }) => {
   const [pageValue, setPageValue] = useState<string>("");
   const [isManualInput, setIsManualInput] = useState(false);
@@ -150,12 +152,12 @@ const SideBar: React.FC<SideBarProps> = ({
   return (
     <>
       <div className="sm:hidden">
-        <button 
+        {isImagesLoaded && (<button 
           onClick={() => setIsFullScreenOpen(true)}
           className="bg-red-500 text-white p-4 rounded-full fixed bottom-4 right-4 z-50 shadow-lg hover:bg-red-600 transition-colors"
         >
           <RiFileSettingsLine className="text-3xl"/>
-        </button>
+        </button>)}
       </div>
 
       {isFullScreenOpen && (

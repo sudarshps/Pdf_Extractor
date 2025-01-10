@@ -28,8 +28,8 @@ const PdfPage: React.FC<PdfPageProps> = ({ pdfPath }) => {
         selectedPages,
         pdfPath,
       })
-      .then((res) => {   
-        if (res.data) { 
+      .then((res) => {
+        if (res.data) {
           setGeneratedPdfLink(res.data.generatedDownloadLink);
         }
       });
@@ -44,14 +44,14 @@ const PdfPage: React.FC<PdfPageProps> = ({ pdfPath }) => {
         const arr = str.split("-");
         for (let i = Number(arr[0]); i <= Number(arr[1]); i++) {
           setSelectedPages((prevSelectedPages) => [...prevSelectedPages, i]);
-          newSelectedImages.push(images[i-1]);
+          newSelectedImages.push(images[i - 1]);
         }
       } else {
         setSelectedPages((prevSelectedPages) => [
           ...prevSelectedPages,
           Number(str),
         ]);
-        newSelectedImages.push(images[Number(str)-1]);
+        newSelectedImages.push(images[Number(str) - 1]);
       }
     }
     setSelectedImage(newSelectedImages);
@@ -124,10 +124,11 @@ const PdfPage: React.FC<PdfPageProps> = ({ pdfPath }) => {
     <>
       <div className="flex flex-col sm:flex-row h-screen">
         <div className="w-full sm:w-3/4 md:w-1/3 overflow-y-auto p-4 flex gap-4 flex-wrap justify-center">
-          <h1 className="text-xl md:text-2xl font-semibold text-white text-center">
-            Select Pages
-          </h1>
           {images && images.length ? (
+            <div className="flex flex-col gap-4 items-center">
+            <h1 className="text-xl md:text-2xl font-semibold text-white text-center">
+              Select Pages
+            </h1>
             <div className="flex gap-4 flex-wrap justify-center">
               {images.map((image, index) => (
                 <div
@@ -150,12 +151,12 @@ const PdfPage: React.FC<PdfPageProps> = ({ pdfPath }) => {
                       className="absolute top-20 left-16 w-6 h-6"
                     />
                   )}
-                  <p className="flex justify-center text-white mt-1">
-                    {index + 1}
-                  </p>
+                  <p className="flex justify-center text-white mt-1">{index + 1}</p>
                 </div>
               ))}
             </div>
+          </div>
+          
           ) : (
             <div className="flex flex-col items-center justify-center min-h-screen h-full p-10 ">
               <Loader />
@@ -165,7 +166,7 @@ const PdfPage: React.FC<PdfPageProps> = ({ pdfPath }) => {
         </div>
 
         <>
-          {selectedImage && (
+          {selectedImage && images && images.length && (
             <div className="sm:hidden fixed bottom-4 left-4 right-4 z-50">
               <button
                 onClick={() => setIsModalOpen(true)}
@@ -310,6 +311,7 @@ const PdfPage: React.FC<PdfPageProps> = ({ pdfPath }) => {
           downloadLink={generatedPdfLink}
           onInputChange={inputChange}
           totalPages={totalPdfPage}
+          isImagesLoaded={images && images.length ?true:false}
         />
       </div>
     </>
