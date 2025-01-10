@@ -70,7 +70,7 @@ const SideBar: React.FC<SideBarProps> = ({
       }
 
       onInputChange(val);
-    }, 500),
+    }, 1500),
     [totalPages, onInputChange]
   );
 

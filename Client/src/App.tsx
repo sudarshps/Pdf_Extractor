@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import PdfPage from "./Components/PdfPage";
+import Loader from "./Components/Loader2";
 
 const App: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [serverPdfFile, setServerPdfFile] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
 
   const handleButtonClick = () => {
     if (fileInputRef.current) {
@@ -26,25 +28,34 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (!pdfFile) return;
-
+    setIsUploading(true); 
     const formData = new FormData();
     formData.append("file", pdfFile);
-    try {
-      axios
-        .post(`${import.meta.env.VITE_BACKEND}/uploadpdf`, formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        })
-        .then((res) => {
-          setServerPdfFile(res.data.filePath);
-        });
-    } catch (error) {
-      console.error("error while uploading pdf", error);
-    }
+
+    axios
+      .post(`${import.meta.env.VITE_BACKEND}/uploadpdf`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((res) => {
+        setServerPdfFile(res.data.filePath);
+      })
+      .catch((error) => {
+        console.error("Error while uploading PDF", error);
+      })
+      .finally(() => {
+        setIsUploading(false);
+      });
   }, [pdfFile]);
 
   return (
     <>
-      {!serverPdfFile ? (
+      {isUploading ? (
+        <div className="flex flex-col justify-center items-center min-h-screen">
+        <Loader />
+        <p className="text-white">Please Wait...</p>
+      </div>
+      
+      ) : !serverPdfFile ? (
         <div className="flex flex-col items-center justify-center">
           <div className="space-y-4 mt-20 px-4 w-full max-w-md text-center">
             <h1 className="font-bold text-2xl sm:text-4xl text-red-500">
@@ -70,11 +81,11 @@ const App: React.FC = () => {
             </button>
           </div>
         </div>
-      ) :
-      (<div className="flex flex-col">
-        <PdfPage pdfPath={serverPdfFile} />
-      </div>)
-      }
+      ) : (
+        <div className="flex flex-col">
+          <PdfPage pdfPath={serverPdfFile} />
+        </div>
+      )}
     </>
   );
 };
