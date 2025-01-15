@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import PdfPage from "./Components/PdfPage";
 import Loader from "./Components/Loader2";
+import Swal from 'sweetalert2'
 
 const App: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -19,7 +20,11 @@ const App: React.FC = () => {
     const file = event.target.files?.[0] || null;
     if (file) {
       if (file.type !== "application/pdf") {
-        alert("valid only pdf!");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Please upload pdf format file!",
+        });
         return;
       }
       setPdfFile(file);
