@@ -59,7 +59,7 @@ const App: React.FC = () => {
   return (
     <>
       {isUploading ? (
-        <div className="flex flex-col justify-center items-center min-h-screen">
+        <div className="flex flex-col bg-gradient-to-b from-gray-900 to-gray-800 justify-center items-center min-h-screen">
         <Loader />
         <p className="text-white">Please Wait...</p>
       </div>
