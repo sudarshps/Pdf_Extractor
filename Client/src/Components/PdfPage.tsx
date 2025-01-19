@@ -122,7 +122,7 @@ const PdfPage: React.FC<PdfPageProps> = ({ pdfPath }) => {
   }, [pdfPath]);
   return (
     <>
-      <div className="flex flex-col sm:flex-row h-screen">
+      <div className="flex flex-col sm:flex-row h-screen bg-gradient-to-b from-gray-900 to-gray-800">
         <div className="w-full sm:w-3/4 md:w-1/3 overflow-y-auto p-4 flex gap-4 flex-wrap justify-center">
           {images && images.length ? (
             <div className="flex flex-col gap-4 items-center">
