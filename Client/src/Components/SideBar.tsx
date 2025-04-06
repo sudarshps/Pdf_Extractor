@@ -223,7 +223,7 @@ const SideBar: React.FC<SideBarProps> = ({
             value={pageValue}
             onChange={handleInputChange}
             onBlur={handleBlur}
-            className="w-full p-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="w-full p-3 text-sm sm:text-base text-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
           />
           <p className="text-xs text-gray-500 mt-2">
             Total Pages: {totalPages}
